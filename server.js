@@ -71,7 +71,7 @@ slapp.message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, te
   
 
 slapp.route('handle1',(msg,state) =>{
-  if (msg.actions.value == 'yes'){
+  if (msg.type == 'action'){
       msg.say('you chose yes')
   }
   if (msg.actions.value == 'no'){
