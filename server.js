@@ -35,8 +35,7 @@ slapp.message('help', ['mention', 'direct_message'], (msg) => {
 })
 
 // "Conversation" flow that tracks state - kicks off when user says hi, hello or hey
-slapp
-  .message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, text) => {
+slapp.message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, text) => {
     msg.say(`${text}, how are you?`)
       // sends next event from user to this route, passing along state
       .route('how-are-you', { greeting: text })
@@ -55,7 +54,19 @@ slapp
     // add their response to state
     state.status = text
 
-    msg.say(`Ok then. Do you wish to deploy?`).route('color', state)
+    msg.say({
+      text: '',
+      attachments: [
+        {
+          text: 'Are you sure?',
+          fallback: 'Are you sure?',
+          callback_id: 'doit_confirm_callback',
+          actions: [
+            { name: 'answer', text: 'Yes', type: 'button', value: 'yes' },
+            { name: 'answer', text: 'No', type: 'button', value: 'no' }
+          ]
+        }]
+      })
   })
   .route('color', (msg, state) => {
     var text = (msg.body.event && msg.body.event.text) || ''
