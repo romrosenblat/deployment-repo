@@ -66,7 +66,7 @@ slapp.message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, te
             { name: 'answer', text: 'No', type: 'button', value: 'no' }
           ]
         }]
-      }).route('handle1',{what: match1})
+      })
   })
   
 
