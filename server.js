@@ -55,6 +55,7 @@ slapp.message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, te
     state.status = text
     msg.say({
       text: '',
+      callback_id: 'do_you_want_to_deploy',
       attachments: [
         {
           text: 'Do you want to deploy?',
@@ -65,9 +66,20 @@ slapp.message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, te
             { name: 'answer', text: 'No', type: 'button', value: 'no' }
           ]
         }]
-      })
+      }).route('handle1',{what: match1})
   })
   
+
+slapp.route('handle1',(msg,state) =>{
+  if (msg.actions.value == 'yes'){
+      msg.say('you chose yes')
+  }
+  if (msg.actions.value == 'no'){
+    msg.say('you chose no')
+}
+})
+
+
   .route('color', (msg, state) => {
     var text = (msg.body.event && msg.body.event.text) || ''
 
